@@ -26,3 +26,13 @@ Made for use with [this VPN image](https://hub.docker.com/r/qmcgaw/private-inter
 * Environment variable: PORT_FORWARDING="on"
 * Environment variable: PORT_FORWARDING_STATUS_FILE="/config/forwarded_port.txt"
 * Volume: /my/host/dir:/config:rw
+
+## Development
+
+### Build Image
+
+`docker build . -t qbittorrent-port-forwarder`
+
+### Run Container
+
+`docker run --rm -it  -e QBT_ADDR=http://192.168.1.100:8002 qbittorrent-port-forwarder:latest`

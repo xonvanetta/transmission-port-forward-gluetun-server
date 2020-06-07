@@ -6,4 +6,6 @@ COPY . .
 
 VOLUME [ "/config" ]
 
-CMD ["ruby", "./qbt_port_forwarder.rb"]
+RUN echo "*/10 * * * * ruby /usr/src/app/qbt_port_forwarder.rb" | crontab -
+
+CMD ["/usr/src/app/entrypoint.sh"]
