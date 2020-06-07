@@ -1,12 +1,28 @@
-# qBittorrent-PIA-Port-Forwarder
+# qbittorrent-port-forward-file
 
-### A Ruby script for automatically setting qBittorrents listening port while connected to PIA VPN
+A Ruby script and Docker container for automatically setting qBittorrent's listening port read from a file.
 
-**Config**\
-Enter your QBT credentials and IP address:port, and then enter your PIA credentials.
+## Config
 
-**Environment**\
-This script was tested with Ruby 2.5.3.
+### Environment Variables
 
-**Usage**\
-Enter your credentials into the config.yml file. Run the script with `ruby qbt_pia_port_forwarder.rb`. It will create a YAML file named `client_id.yml` for storing your client ID. If you wish to force a port change, simply delete the YAML file and run the script. I recommend executing the script with cron or a similar service.
+| Variable     | Example                     | Default                      | Description                                                     |
+|--------------|-----------------------------|------------------------------|-----------------------------------------------------------------|
+| QBT_USERNAME | `username`                  | `admin`                      | qBittorrent username                                            |
+| QBT_PASSWORD | `password`                  | `adminadmin`                 | qBittorrent password                                            |
+| QBT_ADDR     | `http://192.168.1.100:8080` | `http://localhost:8080`    | HTTP URL for the qBittorrent web UI, with port                  |
+| PORT_FILE    | `/config/my_file.txt`       | `/config/forwarded_port.txt` | Container path to the file containing the forwarded port number |
+
+### Volumes
+
+| Host location   | Container location | Mode | Description                                               |
+|-----------------|--------------------|------|-----------------------------------------------------------|
+| `/my/host/dir/` | `/config`          | `ro` | The directory in which the forwared ports file is located |
+
+## Context
+
+Made for use with [this VPN image](https://hub.docker.com/r/qmcgaw/private-internet-access/). Here's an example config for the VPN image:
+
+* Environment variable: PORT_FORWARDING="on"
+* Environment variable: PORT_FORWARDING_STATUS_FILE="/config/forwarded_port.txt"
+* Volume: /my/host/dir:/config:rw
