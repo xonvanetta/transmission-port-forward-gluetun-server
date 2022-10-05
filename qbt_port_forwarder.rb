@@ -47,7 +47,7 @@ end
 def qbt_app_setPreferences(sid, forwarded_port)
   uri = URI("#{QBT_ADDR}/api/v2/app/setPreferences?json=%7B%22listen_port%22:%20#{forwarded_port}%7D")
   http = Net::HTTP.new(uri.host, uri.port)
-  req =  Net::HTTP::Get.new(uri)
+  req =  Net::HTTP::Post.new(uri)
   req.add_field "Cookie", sid
   http.request(req)
 rescue StandardError => e
