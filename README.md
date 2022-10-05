@@ -1,6 +1,6 @@
 # qbittorrent-port-forward-file
 
-A Ruby script and Docker container for automatically setting qBittorrent's listening port read from a file.
+A shell script and Docker container for automatically setting qBittorrent's listening port from a text file.
 
 ## Config
 
@@ -10,7 +10,7 @@ A Ruby script and Docker container for automatically setting qBittorrent's liste
 |--------------|-----------------------------|------------------------------|-----------------------------------------------------------------|
 | QBT_USERNAME | `username`                  | `admin`                      | qBittorrent username                                            |
 | QBT_PASSWORD | `password`                  | `adminadmin`                 | qBittorrent password                                            |
-| QBT_ADDR     | `http://192.168.1.100:8080` | `http://localhost:8080`    | HTTP URL for the qBittorrent web UI, with port                  |
+| QBT_ADDR     | `http://192.168.1.100:8080` | `http://localhost:8080`      | HTTP URL for the qBittorrent web UI, with port                  |
 | PORT_FILE    | `/config/my_file.txt`       | `/config/forwarded_port.txt` | Container path to the file containing the forwarded port number |
 
 ### Volumes
@@ -21,11 +21,18 @@ A Ruby script and Docker container for automatically setting qBittorrent's liste
 
 ## Context
 
-Made for use with [this VPN image](https://hub.docker.com/r/qmcgaw/private-internet-access/). Here's an example config for the VPN image:
+Made for use with [docker-wireguard-pia](https://github.com/thrnz/docker-wireguard-pia):
 
-* Environment variable: PORT_FORWARDING="on"
-* Environment variable: PORT_FORWARDING_STATUS_FILE="/config/forwarded_port.txt"
-* Volume: /my/host/dir:/config:rw
+* Environment variable: `PORT_FORWARDING=1`
+* Environment variable: `PORT_PERSIST=1`
+* Environment variable: `PORT_FILE=/pia/forwarded_port.txt`
+* Volume: `/my/host/dir:/pia:rw`
+
+Or for use with [gluetun](https://github.com/qdm12/gluetun):
+
+* Environment variable: `PRIVATE_INTERNET_ACCESS_VPN_PORT_FORWARDING=on`
+* Environment variable: `PRIVATE_INTERNET_ACCESS_VPN_PORT_FORWARDING_STATUS_FILE=/gluetun/forwarded_port.txt`
+* Volume: `/my/host/dir:/gluetun:rw`
 
 ## Development
 
@@ -35,4 +42,4 @@ Made for use with [this VPN image](https://hub.docker.com/r/qmcgaw/private-inter
 
 ### Run Container
 
-`docker run --rm -it  -e QBT_ADDR=http://192.168.1.100:8002 qbittorrent-port-forwarder:latest`
+`docker run --rm -it -e QBT_ADDR=http://192.168.1.100:8080 qbittorrent-port-forwarder:latest`

@@ -1,12 +1,13 @@
-FROM ruby:2.5-alpine
+FROM alpine:latest
 
 WORKDIR /usr/src/app
 
-COPY . .
-
 VOLUME [ "/config" ]
 
-RUN echo "*/10 * * * * ruby /usr/src/app/qbt_port_forwarder.rb" | crontab - \
-    && chmod +x ./entrypoint.sh
+RUN apk --no-cache add jq curl
+
+RUN echo "*/10 * * * * /bin/sh /usr/src/app/main.sh" | crontab -
+
+COPY *.sh ./
 
 CMD ["/usr/src/app/entrypoint.sh"]
