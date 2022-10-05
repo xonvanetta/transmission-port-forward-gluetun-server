@@ -26,7 +26,7 @@ end
 def qbt_auth_login
   uri = URI("#{QBT_ADDR}/api/v2/auth/login?username=#{QBT_USERNAME}&password=#{QBT_PASSWORD}")
   http = Net::HTTP.new(uri.host, uri.port)
-  req =  Net::HTTP::Get.new(uri)
+  req =  Net::HTTP::Post.new(uri)
   http.request(req)
 rescue StandardError => e
   @logger.error("HTTP Request failed (#{e.message})")
