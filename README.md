@@ -42,4 +42,4 @@ Or for use with [gluetun](https://github.com/qdm12/gluetun):
 
 ### Run Container
 
-`docker run --rm -it -e QBT_ADDR=http://192.168.1.100:8080 qbittorrent-port-forwarder:latest`
+`docker run --rm -it -e QBT_ADDR=http://192.168.1.100:8080 -v $(pwd)/config:/config qbittorrent-port-forwarder:latest`
