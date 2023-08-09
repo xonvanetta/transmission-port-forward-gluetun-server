@@ -21,4 +21,5 @@ jobs:
         username: mjmeli
         password: ${{ secrets.DOCKERHUB_TOKEN }}
         repository: mjmeli/${{ github.event.repository.name }}
+        short-description: ${{ github.event.repository.description }}
         readme-filepath: ./README.md
