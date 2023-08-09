@@ -13,6 +13,24 @@ A shell script and Docker container for automatically setting qBittorrent's list
 | QBT_ADDR     | `http://192.168.1.100:8080` | `http://localhost:8080`      | HTTP URL for the qBittorrent web UI, with port                  |
 | GTN_ADDR     | `http://192.168.1.100:8000` | `http://localhost:8000`      | HTTP URL for the gluetun control server, with port              |
 
+## Example
+
+### Docker-Compose
+
+The following is an example docker-compose:
+
+```yaml
+  qbittorrent-port-forward-gluetun-server:
+    image: mjmeli/qbittorrent-port-forward-gluetun-server
+    container_name: qbittorrent-port-forward-gluetun-server
+    restart: unless-stopped
+    environment:
+      - QBT_USERNAME=username
+      - QBT_PASSWORD=password
+      - QBT_ADDR=http://192.168.1.100:8080
+      - GTN_ADDR=http://192.168.1.100:8000
+```
+
 ## Development
 
 ### Build Image
