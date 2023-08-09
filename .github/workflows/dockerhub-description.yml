@@ -19,6 +19,6 @@ jobs:
       uses: peter-evans/dockerhub-description@v2
       with:
         username: mjmeli
-        password: ${{ secrets.DOCKERHUB_PASSWORD }}
-        repository: mjmeli/qbittorrent-port-forward-gluetun-server
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+        repository: mjmeli/${{ github.event.repository.name }}
         readme-filepath: ./README.md
