@@ -1,17 +1,16 @@
-# qbittorrent-port-forward-gluetun-server
+# transmission-port-forward-gluetun-server
 
-A shell script and Docker container for automatically setting qBittorrent's listening port from Gluetun's control server.
+A shell script and Docker container for automatically setting Transmission's listening port from Gluetun's control server.
 
 ## Config
 
 ### Environment Variables
 
-| Variable     | Example                     | Default                      | Description                                                     |
-|--------------|-----------------------------|------------------------------|-----------------------------------------------------------------|
-| QBT_USERNAME | `username`                  | `admin`                      | qBittorrent username                                            |
-| QBT_PASSWORD | `password`                  | `adminadmin`                 | qBittorrent password                                            |
-| QBT_ADDR     | `http://192.168.1.100:8080` | `http://localhost:8080`      | HTTP URL for the qBittorrent web UI, with port                  |
-| GTN_ADDR     | `http://192.168.1.100:8000` | `http://localhost:8000`      | HTTP URL for the gluetun control server, with port              |
+| Variable | Example                     | Default                 | Description                                        |
+|----------|-----------------------------|-------------------------|----------------------------------------------------|
+| HOST     | `192.168.1.100`             | `127.0.0.1`             | Transmission host                                  |
+| PORT     | `10109`                     | `9091`                  | Transmission port                                  |
+| GTN_ADDR | `http://192.168.1.100:8000` | `http://localhost:8000` | HTTP URL for the gluetun control server, with port |
 
 ## Example
 
@@ -20,23 +19,11 @@ A shell script and Docker container for automatically setting qBittorrent's list
 The following is an example docker-compose:
 
 ```yaml
-  qbittorrent-port-forward-gluetun-server:
-    image: mjmeli/qbittorrent-port-forward-gluetun-server
-    container_name: qbittorrent-port-forward-gluetun-server
+  transmission-port-forward-gluetun-server:
+    image: ghcr.io/xonvanetta/transmission-port-forward-gluetun-server:0.0.1
     restart: unless-stopped
     environment:
-      - QBT_USERNAME=username
-      - QBT_PASSWORD=password
-      - QBT_ADDR=http://192.168.1.100:8080
       - GTN_ADDR=http://192.168.1.100:8000
+      - HOST=192.168.1.101
+      - PORT=10109
 ```
-
-## Development
-
-### Build Image
-
-`docker build . -t qbittorrent-port-forward-gluetun-server`
-
-### Run Container
-
-`docker run --rm -it -e QBT_USERNAME=admin -e QBT_PASSWORD=adminadmin -e QBT_ADDR=http://192.168.1.100:8080 -e GTN_ADDR=http://192.168.1.100:8000 qbittorrent-port-forward-gluetun-server:latest`
